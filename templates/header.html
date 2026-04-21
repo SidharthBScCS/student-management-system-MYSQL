@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} STUDIFY | Home {% endblock %}
+
+{% block body %} 
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-center text-success fw-bold fs-1">STUDIFY</h2>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+
+
+{% endblock %}
