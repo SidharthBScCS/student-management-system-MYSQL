@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/student_management_system'
@@ -34,76 +35,71 @@ class Student(db.Model):
         self.email = email
 
 
-# CRUD OPERATIONS by SIDHARTH
-
-
 @app.route('/')
-def home():
-    return redirect(url_for('students'))
-
 @app.route('/students')
 def students():
     students = Student.query.all()
     courses = Course.query.all()
-    return render_template("students.html", students=students, courses=courses)
+    return render_template('students.html', students=students, courses=courses)
 
 @app.route('/courses')
 def courses():
     courses = Course.query.all()
-    return render_template("courses.html", courses=courses)
+    return render_template('courses.html', courses=courses)
 
-@app.route('/insert', methods=['POST'])
-def insert():
-    name = request.form['name']
-    course_id = int(request.form['course_id'])
-    email = request.form['email']
-
-    new_student = Student(name, course_id, email)
+@app.route('/students/add', methods=['POST'])
+def add_student():
+    new_student = Student(
+        request.form['name'],
+        int(request.form['course_id']),
+        request.form['email']
+    )
     db.session.add(new_student)
     db.session.commit()
     return redirect(url_for('students'))
 
-@app.route('/update', methods=['POST'])
-def update():
-    my_data = Student.query.get(request.form['id'])
-    my_data.name = request.form['name']
-    my_data.course_id = int(request.form['course_id'])
-    my_data.email = request.form['email']
-
+@app.route('/students/update/<int:id>', methods=['POST'])
+def update_student(id):
+    student = Student.query.get_or_404(id)
+    student.name = request.form['name']
+    student.course_id = int(request.form['course_id'])
+    student.email = request.form['email']
     db.session.commit()
     return redirect(url_for('students'))
 
-@app.route('/delete/<int:id>')
-def delete(id):
-    my_data = Student.query.get(id)
-    db.session.delete(my_data)
+@app.route('/students/delete/<int:id>')
+def delete_student(id):
+    student = Student.query.get_or_404(id)
+    db.session.delete(student)
     db.session.commit()
     return redirect(url_for('students'))
 
-@app.route('/course/insert', methods=['POST'])
-def insert_course():
-    course_name = request.form['course_name']
-    credits = int(request.form['credits'])
-
-    new_course = Course(course_name, credits)
+@app.route('/courses/add', methods=['POST'])
+def add_course():
+    new_course = Course(
+        request.form['course_name'],
+        int(request.form['credits'])
+    )
     db.session.add(new_course)
     db.session.commit()
     return redirect(url_for('courses'))
 
-@app.route('/course/update', methods=['POST'])
-def update_course():
-    course = Course.query.get(request.form['id'])
+@app.route('/courses/update/<int:id>', methods=['POST'])
+def update_course(id):
+    course = Course.query.get_or_404(id)
     course.course_name = request.form['course_name']
     course.credits = int(request.form['credits'])
-
     db.session.commit()
     return redirect(url_for('courses'))
 
-@app.route('/course/delete/<int:id>')
+@app.route('/courses/delete/<int:id>')
 def delete_course(id):
-    course = Course.query.get(id)
-    db.session.delete(course)
-    db.session.commit()
+    try:
+        course = Course.query.get_or_404(id)
+        db.session.delete(course)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
     return redirect(url_for('courses'))
 
 if __name__ == "__main__":

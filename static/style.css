@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f5f9;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    margin-top: 0;
+    color: #1f6f43;
+    text-align: center;
+}
+
+h2 {
+    color: #263238;
+}
+
+h3 {
+    margin-top: 25px;
+    color: #37474f;
+}
+
+nav {
+    text-align: center;
+    margin: 18px 0;
+}
+
+nav a {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 10px 18px;
+    color: #ffffff;
+    background-color: #1f6f43;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: #155832;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #dddddd;
+    margin: 20px 0;
+}
+
+.add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: end;
+    padding: 15px;
+    background-color: #eef7f1;
+    border: 1px solid #cfe8d8;
+    border-radius: 6px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select {
+    padding: 8px;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+}
+
+table input,
+table select {
+    width: 100%;
+}
+
+.btn {
+    padding: 9px 14px;
+    color: #ffffff;
+    background-color: #1976d2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0d5ca8;
+}
+
+.small-btn {
+    padding: 7px 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    background-color: #ffffff;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+
+th {
+    color: #ffffff;
+    background-color: #263238;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fb;
+}
+
+.delete-link {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 7px 10px;
+    color: #ffffff;
+    background-color: #d32f2f;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.delete-link:hover {
+    background-color: #a92323;
+}
