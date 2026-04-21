@@ -5,7 +5,13 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #202124;
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(66, 133, 244, 0.24), transparent 34%),
+        linear-gradient(225deg, rgba(52, 168, 83, 0.18), transparent 36%),
+        linear-gradient(315deg, rgba(251, 188, 5, 0.12), transparent 32%),
+        #15171c;
+    background-attachment: fixed;
     color: #e8eaed;
 }
 
@@ -18,8 +24,11 @@ body {
     align-items: center;
     gap: 20px;
     padding: 16px 32px;
-    background-color: #171717;
-    border-bottom: 1px solid #3c4043;
+    background-color: rgba(23, 25, 31, 0.68);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
 }
 
 .brand {
@@ -62,17 +71,18 @@ body {
 .nav-links a {
     padding: 10px 16px;
     color: #bdc1c6;
-    background-color: transparent;
-    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 999px;
     text-decoration: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .nav-links a:hover,
 .nav-links a.active {
     color: #e8f0fe;
-    background-color: #303134;
-    border-color: #5f6368;
+    background-color: rgba(138, 180, 248, 0.18);
+    border-color: rgba(255, 255, 255, 0.24);
 }
 
 .container {
@@ -80,10 +90,16 @@ body {
     max-width: 1100px;
     margin: 30px auto;
     padding: 26px;
-    background-color: #2b2c2f;
-    border: 1px solid #3c4043;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06)),
+        rgba(36, 39, 47, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(26px) saturate(150%);
+    -webkit-backdrop-filter: blur(26px) saturate(150%);
 }
 
 h1 {
@@ -103,6 +119,12 @@ h3 {
     color: #e8eaed;
 }
 
+.page-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 22px;
+}
+
 hr {
     border: none;
     border-top: 1px solid #3c4043;
@@ -118,10 +140,11 @@ input,
 select {
     padding: 9px 10px;
     color: #e8eaed;
-    background-color: #202124;
-    border: 1px solid #5f6368;
+    background-color: rgba(12, 15, 20, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 4px;
     outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 input:focus,
@@ -134,16 +157,23 @@ select:focus {
     display: inline-block;
     padding: 10px 15px;
     color: #ffffff;
-    background-color: #1a73e8;
-    border: none;
+    background:
+        linear-gradient(180deg, rgba(138, 180, 248, 0.42), rgba(26, 115, 232, 0.76)),
+        rgba(26, 115, 232, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
     font-weight: bold;
+    box-shadow:
+        0 10px 22px rgba(26, 115, 232, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .btn:hover {
-    background-color: #185abc;
+    background:
+        linear-gradient(180deg, rgba(174, 203, 250, 0.5), rgba(24, 90, 188, 0.82)),
+        rgba(24, 90, 188, 0.78);
 }
 
 .small-btn {
@@ -154,30 +184,32 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 14px;
-    background-color: #202124;
+    background-color: rgba(18, 21, 27, 0.5);
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 th,
 td {
     padding: 13px 12px;
-    border-bottom: 1px solid #3c4043;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     text-align: left;
 }
 
 th {
     color: #bdc1c6;
-    background-color: #171717;
+    background-color: rgba(255, 255, 255, 0.08);
     font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #26272a;
+    background-color: rgba(255, 255, 255, 0.035);
 }
 
 tr:hover {
-    background-color: #303134;
+    background-color: rgba(138, 180, 248, 0.1);
 }
 
 .delete-link {
@@ -185,14 +217,22 @@ tr:hover {
     margin-left: 8px;
     padding: 7px 11px;
     color: #ffffff;
-    background-color: #ea4335;
+    background:
+        linear-gradient(180deg, rgba(255, 143, 133, 0.38), rgba(234, 67, 53, 0.78)),
+        rgba(234, 67, 53, 0.76);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     text-decoration: none;
     border-radius: 4px;
     font-weight: bold;
+    box-shadow:
+        0 10px 22px rgba(234, 67, 53, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .delete-link:hover {
-    background-color: #c5221f;
+    background:
+        linear-gradient(180deg, rgba(255, 143, 133, 0.44), rgba(197, 34, 31, 0.84)),
+        rgba(197, 34, 31, 0.82);
 }
 
 .modal {
@@ -203,7 +243,9 @@ tr:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.72);
+    background-color: rgba(5, 8, 13, 0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .modal:target {
@@ -212,14 +254,20 @@ tr:hover {
 
 .modal-box {
     width: 90%;
-    max-width: 450px;
-    margin: 90px auto;
-    padding: 25px;
-    background-color: #2b2c2f;
-    border: 1px solid #5f6368;
+    max-width: 720px;
+    margin: 70px auto;
+    padding: 34px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07)),
+        rgba(37, 41, 50, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 8px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.48),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
     position: relative;
+    backdrop-filter: blur(30px) saturate(155%);
+    -webkit-backdrop-filter: blur(30px) saturate(155%);
 }
 
 .modal-box h3 {
@@ -231,7 +279,8 @@ tr:hover {
     top: 12px;
     right: 15px;
     color: #ffffff;
-    background-color: #ea4335;
+    background-color: rgba(234, 67, 53, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     padding: 4px 8px;
     text-decoration: none;
     border-radius: 4px;
@@ -241,14 +290,14 @@ tr:hover {
 .modal-form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: 110px 1fr;
+    grid-template-columns: 150px 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
     width: 100%;
 }
 
@@ -258,7 +307,7 @@ tr:hover {
 }
 
 .modal-form .btn {
-    margin-left: 122px;
+    margin-left: 168px;
     align-self: flex-start;
 }
 
@@ -281,6 +330,12 @@ tr:hover {
     .container {
         width: 94%;
         padding: 18px;
+    }
+
+    .modal-box {
+        width: 94%;
+        margin: 48px auto;
+        padding: 24px;
     }
 
     .form-row {

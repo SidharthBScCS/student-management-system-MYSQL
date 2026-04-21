@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/student_management_system'
@@ -94,12 +93,10 @@ def update_course(id):
 
 @app.route('/courses/delete/<int:id>')
 def delete_course(id):
-    try:
-        course = Course.query.get_or_404(id)
-        db.session.delete(course)
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
+    course = Course.query.get_or_404(id)
+    Student.query.filter_by(course_id=id).delete()
+    db.session.delete(course)
+    db.session.commit()
     return redirect(url_for('courses'))
 
 if __name__ == "__main__":
