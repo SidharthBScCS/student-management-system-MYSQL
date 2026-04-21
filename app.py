@@ -37,12 +37,20 @@ class Student(db.Model):
 # CRUD OPERATIONS by SIDHARTH
 
 
-@app.route('/dashboard')
 @app.route('/')
-def dashboard():
+def home():
+    return redirect(url_for('students'))
+
+@app.route('/students')
+def students():
     students = Student.query.all()
     courses = Course.query.all()
-    return render_template("index.html", students=students, courses=courses)
+    return render_template("students.html", students=students, courses=courses)
+
+@app.route('/courses')
+def courses():
+    courses = Course.query.all()
+    return render_template("courses.html", courses=courses)
 
 @app.route('/insert', methods=['POST'])
 def insert():
@@ -53,7 +61,7 @@ def insert():
     new_student = Student(name, course_id, email)
     db.session.add(new_student)
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('students'))
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -63,14 +71,14 @@ def update():
     my_data.email = request.form['email']
 
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('students'))
 
 @app.route('/delete/<int:id>')
 def delete(id):
     my_data = Student.query.get(id)
     db.session.delete(my_data)
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('students'))
 
 @app.route('/course/insert', methods=['POST'])
 def insert_course():
@@ -80,7 +88,7 @@ def insert_course():
     new_course = Course(course_name, credits)
     db.session.add(new_course)
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('courses'))
 
 @app.route('/course/update', methods=['POST'])
 def update_course():
@@ -89,14 +97,14 @@ def update_course():
     course.credits = int(request.form['credits'])
 
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('courses'))
 
 @app.route('/course/delete/<int:id>')
 def delete_course(id):
     course = Course.query.get(id)
     db.session.delete(course)
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('courses'))
 
 if __name__ == "__main__":
     with app.app_context():
