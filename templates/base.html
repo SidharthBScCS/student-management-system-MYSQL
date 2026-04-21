@@ -2,20 +2,26 @@
 <html>
 <head>
     <title>{% block title %}Student Management{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
 </head>
 <body>
-    <div class="container">
-        <h1>Student Management System</h1>
+    <header class="top-nav">
+        <a class="brand" href="{{ url_for('students') }}">
+            <span class="brand-dot blue"></span>
+            <span class="brand-dot red"></span>
+            <span class="brand-dot yellow"></span>
+            <span class="brand-dot green"></span>
+            <span>Student Management</span>
+        </a>
 
-        <nav>
-            <a href="{{ url_for('students') }}">Students</a>
-            <a href="{{ url_for('courses') }}">Courses</a>
+        <nav class="nav-links">
+            <a class="{% if request.endpoint == 'students' %}active{% endif %}" href="{{ url_for('students') }}">Students</a>
+            <a class="{% if request.endpoint == 'courses' %}active{% endif %}" href="{{ url_for('courses') }}">Courses</a>
         </nav>
+    </header>
 
-        <hr>
-
+    <main class="container">
         {% block body %}{% endblock %}
-    </div>
+    </main>
 </body>
 </html>

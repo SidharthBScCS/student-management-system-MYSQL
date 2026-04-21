@@ -5,24 +5,38 @@
 {% block body %}
     <h2>Students</h2>
 
-    <h3>Add Student</h3>
-    <form class="add-form" action="{{ url_for('add_student') }}" method="POST">
-        <label>Name:</label>
-        <input type="text" name="name" required>
+    <a class="btn" href="#addStudentModal">Add New Student</a>
 
-        <label>Course ID:</label>
-        <select name="course_id" required>
-            <option value="">Select Course</option>
-            {% for course in courses %}
-                <option value="{{ course.id }}">{{ course.id }} - {{ course.course_name }}</option>
-            {% endfor %}
-        </select>
+    <div id="addStudentModal" class="modal">
+        <div class="modal-box">
+            <a class="close-btn" href="#">X</a>
+            <h3>Add Student</h3>
 
-        <label>Email:</label>
-        <input type="email" name="email" required>
+            <form class="modal-form" action="{{ url_for('add_student') }}" method="POST">
+                <div class="form-row">
+                    <label>Name:</label>
+                    <input type="text" name="name" required>
+                </div>
 
-        <button class="btn" type="submit">Add Student</button>
-    </form>
+                <div class="form-row">
+                    <label>Course ID:</label>
+                    <select name="course_id" required>
+                        <option value="">Select Course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.id }} - {{ course.course_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label>Email:</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <button class="btn" type="submit">Add Student</button>
+            </form>
+        </div>
+    </div>
 
     <h3>Student List</h3>
     <table>
@@ -36,29 +50,49 @@
 
         {% for student in students %}
         <tr>
-            <form action="{{ url_for('update_student', id=student.id) }}" method="POST">
-                <td>{{ student.id }}</td>
-                <td>
-                    <input type="text" name="name" value="{{ student.name }}" required>
-                </td>
-                <td>
-                    <select name="course_id" required>
-                        {% for course in courses %}
-                            <option value="{{ course.id }}" {% if student.course_id == course.id %}selected{% endif %}>
-                                {{ course.id }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <input type="email" name="email" value="{{ student.email }}" required>
-                </td>
-                <td>
-                    <button class="btn small-btn" type="submit">Update</button>
-                    <a class="delete-link" href="{{ url_for('delete_student', id=student.id) }}">Delete</a>
-                </td>
-            </form>
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.course_id }}</td>
+            <td>{{ student.email }}</td>
+            <td>
+                <a class="btn small-btn" href="#editStudentModal{{ student.id }}">Update</a>
+                <a class="delete-link" href="{{ url_for('delete_student', id=student.id) }}">Delete</a>
+            </td>
         </tr>
         {% endfor %}
     </table>
+
+    {% for student in students %}
+    <div id="editStudentModal{{ student.id }}" class="modal">
+        <div class="modal-box">
+            <a class="close-btn" href="#">X</a>
+            <h3>Edit Student</h3>
+
+            <form class="modal-form" action="{{ url_for('update_student', id=student.id) }}" method="POST">
+                <div class="form-row">
+                    <label>Name:</label>
+                    <input type="text" name="name" value="{{ student.name }}" required>
+                </div>
+
+                <div class="form-row">
+                    <label>Course ID:</label>
+                    <select name="course_id" required>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}" {% if student.course_id == course.id %}selected{% endif %}>
+                                {{ course.id }} - {{ course.course_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label>Email:</label>
+                    <input type="email" name="email" value="{{ student.email }}" required>
+                </div>
+
+                <button class="btn" type="submit">Update Student</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}
