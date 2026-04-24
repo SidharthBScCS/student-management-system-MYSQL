@@ -2,19 +2,18 @@ package com.app_backend.CRUD.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.app_backend.CRUD.model.Student;
 import com.app_backend.CRUD.service.StudentService;
 
-@RestController
+@Controller
 @RequestMapping("/student")
 public class StudentController {
     public final StudentService studentService;
@@ -24,8 +23,9 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    public String createStudent(Student student) {
+        studentService.saveStudent(student);
+        return "redirect:/";
     }
 
     @GetMapping
@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Integer id, @RequestBody Student student) {
+    public Student updateStudent(@PathVariable Integer id, Student student) {
         return studentService.putStudent(id, student);
     }
 
