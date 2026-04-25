@@ -4,6 +4,7 @@ import com.app_backend.CRUD.service.StudentService;
 import com.app_backend.CRUD.service.FacultyService;
 import com.app_backend.CRUD.service.CourseService;
 import com.app_backend.CRUD.service.DepartmentService;
+import com.app_backend.CRUD.service.LibraryService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +17,18 @@ public class PageController {
     private final FacultyService facultyService;
     private final CourseService courseService;
     private final DepartmentService departmentService;
+    private final LibraryService libraryService;
 
     public PageController(StudentService studentService,
                           FacultyService facultyService,
                           CourseService courseService,
-                          DepartmentService departmentService) {
+                          DepartmentService departmentService,
+                          LibraryService libraryService) {
         this.studentService = studentService;
         this.facultyService = facultyService;
         this.courseService = courseService;
         this.departmentService = departmentService;
+        this.libraryService = libraryService;
     }
 
     @GetMapping("/")
@@ -49,5 +53,11 @@ public class PageController {
     public String departmentPage(Model model) {
         model.addAttribute("departments", departmentService.readDepartments());
         return "department";
+    }
+
+    @GetMapping("/library")
+    public String libraryPage(Model model) {
+        model.addAttribute("libraries", libraryService.readLibraries());
+        return "library";
     }
 }
