@@ -1,7 +1,5 @@
 package com.app_backend.CRUD.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app_backend.CRUD.model.Student;
 import com.app_backend.CRUD.service.StudentService;
-import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/student")
@@ -27,11 +24,6 @@ public class StudentController {
         return "redirect:/";
     }
 
-    @GetMapping
-    public List<Student> readAllStudent() {
-        return studentService.readStudents();
-    }
-
     @GetMapping("/{id}")
     public Student readStudent(@PathVariable Integer id) {
         return studentService.readStudent(id);
@@ -41,13 +33,6 @@ public class StudentController {
     public String deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudent(id);
         return "redirect:/";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editStudent(@PathVariable Integer id, Model model) {
-        Student student = studentService.readStudent(id);
-        model.addAttribute("student", student);
-        return "update";
     }
 
     @PostMapping("/update/{id}")
