@@ -2,6 +2,8 @@ package com.app_backend.CRUD.controller;
 
 import com.app_backend.CRUD.service.StudentService;
 import com.app_backend.CRUD.service.FacultyService;
+import com.app_backend.CRUD.service.CourseService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +13,14 @@ public class PageController {
 
     private final StudentService studentService;
     private final FacultyService facultyService;
+    private final CourseService courseService;
 
     public PageController(StudentService studentService,
-                          FacultyService facultyService) {
+                          FacultyService facultyService,
+                          CourseService courseService) {
         this.studentService = studentService;
         this.facultyService = facultyService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/")
@@ -28,5 +33,11 @@ public class PageController {
     public String facultyPage(Model model) {
         model.addAttribute("faculties", facultyService.readFaculties());
         return "faculty";
+    }
+
+    @GetMapping("/course")
+    public String coursePage(Model model) {
+        model.addAttribute("courses", courseService.readCourses());
+        return "course";
     }
 }

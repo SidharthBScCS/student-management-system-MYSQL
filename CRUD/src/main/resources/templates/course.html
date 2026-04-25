@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Management System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">University Management</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/faculty">Faculty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/course">Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/department">Department</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/library">Library</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Course Management System</h2>
+
+    <button class="btn btn-primary mb-4"
+            data-bs-toggle="modal"
+            data-bs-target="#addCourseModal">
+        Add New Course
+    </button>
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <h4 class="mb-3">Course List</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Course Name</th>
+                            <th>Course Code</th>
+                            <th>Department</th>
+                            <th>Credits</th>
+                            <th>Faculty Name</th>
+                            <th>Course Level</th>
+                            <th>Course Type</th>
+                            <th>Language</th>
+                            <th>Mode</th>
+                            <th>Exam Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="course : ${courses}">
+                            <td th:text="${course.id}"></td>
+                            <td th:text="${course.courseName}"></td>
+                            <td th:text="${course.courseCode}"></td>
+                            <td th:text="${course.department}"></td>
+                            <td th:text="${course.credits}"></td>
+                            <td th:text="${course.facultyName}"></td>
+                            <td th:text="${course.courseLevel}"></td>
+                            <td th:text="${course.courseType}"></td>
+                            <td th:text="${course.language}"></td>
+                            <td th:text="${course.mode}"></td>
+                            <td th:text="${course.examType}"></td>
+
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#updateCourseModal"
+                                    th:attr="
+                                        data-id=${course.id},
+                                        data-courseName=${course.courseName},
+                                        data-courseCode=${course.courseCode},
+                                        data-department=${course.department},
+                                        data-credits=${course.credits},
+                                        data-facultyName=${course.facultyName},
+                                        data-courseLevel=${course.courseLevel},
+                                        data-courseType=${course.courseType},
+                                        data-language=${course.language},
+                                        data-mode=${course.mode},
+                                        data-examType=${course.examType}"
+                                    onclick="setCourseData(this)">
+                                    Update
+                                </button>
+
+                                <a
+                                    th:href="@{/course/delete/{id}(id=${course.id})}"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this course?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="addCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <form action="/course" method="post">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Course</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="text" name="courseName" class="form-control mb-3" placeholder="Course Name" required>
+                    <input type="text" name="courseCode" class="form-control mb-3" placeholder="Course Code" required>
+                    <input type="text" name="department" class="form-control mb-3" placeholder="Department" required>
+                    <input type="number" name="credits" class="form-control mb-3" placeholder="Credits" required>
+                    <input type="text" name="facultyName" class="form-control mb-3" placeholder="Faculty Name" required>
+                    <input type="text" name="courseLevel" class="form-control mb-3" placeholder="Course Level" required>
+                    <input type="text" name="courseType" class="form-control mb-3" placeholder="Course Type" required>
+                    <input type="text" name="language" class="form-control mb-3" placeholder="Language" required>
+                    <input type="text" name="mode" class="form-control mb-3" placeholder="Mode" required>
+                    <input type="text" name="examType" class="form-control mb-3" placeholder="Exam Type" required>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        Save Course
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <form id="updateCourseForm" method="post">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Course</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input id="cName" type="text" name="courseName" class="form-control mb-3" required>
+                    <input id="cCode" type="text" name="courseCode" class="form-control mb-3" required>
+                    <input id="cDepartment" type="text" name="department" class="form-control mb-3" required>
+                    <input id="cCredits" type="number" name="credits" class="form-control mb-3" required>
+                    <input id="cFacultyName" type="text" name="facultyName" class="form-control mb-3" required>
+                    <input id="cCourseLevel" type="text" name="courseLevel" class="form-control mb-3" required>
+                    <input id="cCourseType" type="text" name="courseType" class="form-control mb-3" required>
+                    <input id="cLanguage" type="text" name="language" class="form-control mb-3" required>
+                    <input id="cMode" type="text" name="mode" class="form-control mb-3" required>
+                    <input id="cExamType" type="text" name="examType" class="form-control mb-3" required>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning">
+                        Update Course
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function setCourseData(button) {
+    let id = button.getAttribute("data-id");
+
+    document.getElementById("cName").value = button.getAttribute("data-courseName");
+    document.getElementById("cCode").value = button.getAttribute("data-courseCode");
+    document.getElementById("cDepartment").value = button.getAttribute("data-department");
+    document.getElementById("cCredits").value = button.getAttribute("data-credits");
+    document.getElementById("cFacultyName").value = button.getAttribute("data-facultyName");
+    document.getElementById("cCourseLevel").value = button.getAttribute("data-courseLevel");
+    document.getElementById("cCourseType").value = button.getAttribute("data-courseType");
+    document.getElementById("cLanguage").value = button.getAttribute("data-language");
+    document.getElementById("cMode").value = button.getAttribute("data-mode");
+    document.getElementById("cExamType").value = button.getAttribute("data-examType");
+
+    document.getElementById("updateCourseForm").action =
+        "/course/update/" + id;
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
